@@ -18,7 +18,7 @@ config:
   pystorm.log.backup_count: 2
   pystorm.log.level: trace
   pystorm.log.max_bytes: 1000000
-  pystorm.log.path: /home/safari/Documents/services/apache-storm-2.2.0/streamlogs/
+  pystorm.log.path: /opt/apache-storm-2.2.0/streamlogs/
   storm.workers.list: []
   sudo_user: storm
   topology.acker.executors: 1

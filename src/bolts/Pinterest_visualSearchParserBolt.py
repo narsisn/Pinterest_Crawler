@@ -24,11 +24,11 @@ from colormath.color_conversions import convert_color
 class Pinterest_visualSearchParserBolt(Bolt):
     outputs = ["url","product_category", "main_category", "business_name", "gender", "type", "business_type", "business_id"]
     def initialize(self, conf, ctx):
-        self.solr_con = pysolr.Solr("http://192.168.104.100:8983/solr/Product_Core",always_commit=True, timeout=100)
-        self.solr_ackedCon = pysolr.Solr("http://192.168.104.100:8983/solr/PAcked_Core",always_commit=True, timeout=100)
+        self.solr_con = pysolr.Solr("http://serverip:8983/solr/Product_Core",always_commit=True, timeout=100)
+        self.solr_ackedCon = pysolr.Solr("http://serverip:8983/solr/PAcked_Core",always_commit=True, timeout=100)
         self.samples = []
         self.lables = []
-        self.storagePath = '/home/safari/logo_images/'
+        self.storagePath = '/opt/images/'
 
 
     def process(self, tup):
@@ -71,7 +71,7 @@ class Pinterest_visualSearchParserBolt(Bolt):
             has_discount="0"
             price_discount ="0.0"
             image_id ='image_id'
-            product_link ='https://www.snapmode.ir'
+            product_link ='https://www.mode.ir'
             if j["resource_response"]["data"] is None:
                 self.solr_ackedCon.add([{
                     "business_name":business_name,
@@ -88,16 +88,13 @@ class Pinterest_visualSearchParserBolt(Bolt):
                 imagePath = self.storagePath + iamge_name
                 with open(imagePath, 'wb') as fobj:
                     fobj.write(data_img.content) 
-                url = 'https://images.snapmode.ir/'+ iamge_name
+                url = 'https://mode.ir/'+ iamge_name
                 #--------
                 product_description = j["resource_response"]["data"]["results"][i]["description"] 
                 price = price_discount = 0
-                product_link ="https://www.snapmode.ir/products/" + image_id
+                product_link ="https://www.mode.ir/products/" + image_id
            
-                # except: 
-                    # self.logger.info("Extract Data Error.")
-                    # continue
-                # check if product exsit at database 
+      
                 try:
                     url_result=self.solr_con.search("url:"+'"'+url+'"')
                 except:
