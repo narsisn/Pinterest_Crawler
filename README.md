@@ -1,1 +1,1 @@
-# Pinterest Crawler Using Apache Storm
+# Pinterest Crawler Using Apache Storm and Apache Solr
