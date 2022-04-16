@@ -1,0 +1,21 @@
+{
+    "serializer": "json",
+    "topology_specs": "topologies/",
+    "virtualenv_specs": "virtualenvs/",
+    "envs": {
+        "prod": {
+            "user": "storm",
+            "nimbus": "localhost",
+            "workers": [
+                "localhost"
+            ],
+            "log": {
+                "path": "/home/safari/Documents/services/apache-storm-2.2.0/streamlogs/",
+                "max_bytes": 1000000,
+                "backup_count": 2,
+                "level": "trace"
+            },
+            "virtualenv_root": ""
+        }
+    }
+}

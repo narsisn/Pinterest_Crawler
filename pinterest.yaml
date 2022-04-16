@@ -1,0 +1,50 @@
+bolts:
+- className: org.apache.storm.flux.wrappers.bolts.FluxShellBolt
+  configMethods: []
+  constructorArgs:
+  - - streamparse_run
+    - -s json bolts.Pinterest_visualSearchParserBolt.Pinterest_visualSearchParserBolt
+  - - url
+    - product_category
+    - main_category
+    - business_name
+    - gender
+    - type
+    - business_type
+    - business_id
+  id: count_bolt
+  parallelism: 2
+config:
+  pystorm.log.backup_count: 2
+  pystorm.log.level: trace
+  pystorm.log.max_bytes: 1000000
+  pystorm.log.path: /home/safari/Documents/services/apache-storm-2.2.0/streamlogs/
+  storm.workers.list: []
+  sudo_user: storm
+  topology.acker.executors: 1
+  topology.python.path: /Pinterest_VisualSearchTopology/bin/python
+  topology.workers: 1
+  virtualenv_root: ''
+name: Pinterest_VisualSearchTopology
+spouts:
+- className: org.apache.storm.flux.wrappers.spouts.FluxShellSpout
+  configMethods: []
+  constructorArgs:
+  - - streamparse_run
+    - -s json spouts.Pinterest_VisualSearchSpout.Pinterest_VisualSearchSpout
+  - - url
+    - product_category
+    - main_category
+    - business_name
+    - gender
+    - type
+    - business_type
+    - business_id
+  id: word_spout
+  parallelism: 1
+streams:
+- from: word_spout
+  grouping:
+    streamId: default
+    type: SHUFFLE
+  to: count_bolt
